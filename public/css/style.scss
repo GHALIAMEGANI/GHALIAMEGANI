@@ -1,0 +1,590 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap'); 
+
+
+//MES VARIABLES//
+//PARAMETRAGE DES COULEURS JE DECLARE MES VARIABLES AVEC LE $ //
+
+$violet: #9356DC; 
+$rose:#FF79DA;  
+$vert:#99E2D0;
+$gris : #f2f2f2;
+$gradient : (to top, #9356dc, #ff79da);
+
+
+
+//MES MIXINS//
+//PARAMETRAGE DES DISPOSITIONS JE DECLARE MES MIXINS AVEC LES  @INCLUDE+NOM : EX: CENTRAGE //
+
+@mixin centrage1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+@mixin centrage2{
+   margin-left: auto;
+   margin-right: auto;
+    }
+
+@mixin centrage3{
+    text-align: center;
+    }
+//BOUTON BICOLORE//
+@mixin bouton{
+    background-image: linear-gradient(to top, #9356dc, #ff79da);
+    width:220px;
+    height: 50px;
+    box-shadow: 3px 4px 3px 1px rgba(196, 196, 196, 0.541);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+    font-weight: bolder;
+    font-size: 1.1rem;
+    margin-top: 45px ;
+    margin-bottom: 55px
+    }
+@mixin boutonD{
+    background-image: linear-gradient(to top, #99E2D0, green);
+    width:220px;
+    height: 50px;
+    box-shadow: 3px 4px 3px 1px rgba(196, 196, 196, 0.541);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:black;
+    font-weight: bolder;
+    font-size: 1.3rem;
+    margin-top: 45px ;
+    margin-bottom: 55px
+    }
+//PETIT BOUTON//
+@mixin btn{
+    border-radius: 50%;
+    margin-left: -30px;
+    width: 25px;
+    height:25px;
+    color: whitesmoke;
+    font-size: 0.8rem;
+    }
+@mixin h1{
+    font-size: 1.4rem;
+    margin-top: 40px;
+    }
+@mixin carte{//emplacement des photo et des textes dans l'accueil
+    box-shadow: 3px 4px 3px 1px rgba(196, 196, 196, 0.541);
+    border-radius: 25px;
+    width: 100%;    
+    height: 255px;    
+    }
+@mixin cartefoto{//dimension des photos des restos 
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0 ;    
+    }
+@mixin nouveau{ //encart "NOUVEAU" //
+    background-color:$vert;
+    color: green;
+    font-size: 0.9em;
+    width: 80px;
+    height: 30px;
+    @include centrage1();
+    position: relative;    
+    left: 75%;
+    bottom: 200px;
+    }
+@mixin new{ //encart caché "NOUVEAU" //  
+    position: relative;
+    z-index: -1;    
+    }
+@mixin ombre{
+    box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+    }
+//SUGGESTIONS//
+@mixin grid{// mise en place des articles des restaurants//
+    margin-left: -5px;
+    padding-top: 30px;
+    display: grid;    
+    display: grid; /*placement à droite des coeurs*/
+    grid-template-columns: 1fr;
+    column-gap: 30px;    
+    }
+@mixin illustration{// Mise en place des photos des restaurants)//
+    width: 100%;
+    height: 250px; 
+    object-fit: cover;
+    }
+@mixin soulignement{
+    border-bottom: solid $vert 4px;
+    margin-left: 20px;
+    padding-bottom: 1%;
+    width: 10%;
+    }
+@mixin soulignementD{
+    border-bottom: solid $rose 4px;
+    margin-left: 20px;
+    padding-bottom: 1%;
+    width: 10%;
+    }
+@mixin coeurG{
+    right: 0px;
+    position: absolute;
+    z-index: -1; /*Icone coeur plein au second plan*/
+    background: linear-gradient(0deg,$rose 0%, #d96edf 35%,#b261e4 70%,$violet 100%); 
+    /*Un dégradé qui démarre du bas et va vers le haut qui commence de la couleur secondaire à 0% et fini à la couleur primaire à 100% avec 2 étapes à 35 et 70%*/
+    background-clip: text;/*Permet au background d'être appliqué sur le coeur qui ne prend que la propriété color normalement*/
+    -webkit-background-clip: text; /*pas supporté par chrome donc obligé de passer par webkit*/
+    color: transparent;
+    opacity: 0;
+    transform: scale(0);
+    transition: 300ms ease-in-out;/*L'animation commence lentement, accèlere puis ralentit à nouveau avant la fin*/
+    }    
+@mixin coeurV{
+    font-size: 25px;
+    position: relative;
+    color:black;
+    z-index: 1; /*Icone coeur vide au 1er plan*/
+    cursor: pointer;
+    }
+@mixin coeurVhover{          
+    background: linear-gradient(0deg,$rose 0%, #d96edf 35%,#b261e4 70%,$violet 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    }
+
+/***************FIN DE LA DECLARATION DE MES MIXINS **********************************************************/
+
+
+
+/***************DEBUT DES DECLARATION DES PARAMETRES SUR L'INTEGRALITE DE LA PAGE**************/
+body{
+    font-family: 'Roboto';
+    margin: 0;
+    width: 100%;
+    }
+li{
+    list-style: none;
+    }
+a{
+    text-decoration: none;
+    }
+/***************FIN DE LA DECLARATION DES PARAMETRES SUR L'INTEGRALITE DE LA PAGE***************/
+//SECTION ENTETE : MON ENTETE ENGLOBERA LE 1-LOGO, 2-L'EMPLACEMENT, 3-LES 2 SLOGANS ET 4-LE BOUTON
+/*1- Logo*/
+.logo{  
+    border-bottom: rgb(216, 214, 214) solid; /*integration du logo avec la bordure ombree*/
+    padding-bottom: 10px; /*epaisseur de la bordure*/
+    .logo__pic{
+    @include centrage1()
+    }    
+    .logo__pic img {
+        width: 165px;
+        height: 35px;
+    }   
+}
+/*2-Emplacement*/
+.location{
+    font-size: 0.95rem;
+    width: 100%;
+    height: 50px;
+    background-color: #e7e6e6;    
+    @include centrage1();
+}
+/*3- Les Slogans*/
+.headline{ 
+    background-color: $gris;
+    &__mid {
+        width: 250px;
+        height: 290px;
+        @include centrage2()
+        padding-top: 20px;
+    h2{@include centrage3()}
+    p{@include centrage3()
+        font-size: 0.8rem;
+        font-weight: 400;    
+    }
+/*4- Le bouton*/
+        &--button{
+        @include bouton;
+        @include centrage2()                
+        }
+    }
+}
+
+//SECTION FONCTIONNEMENT
+.fonctionnement{    
+    h1{
+    @include h1();
+    margin-left: 25px;
+    margin-bottom: 30px;
+    }
+    &__menu{
+        padding-left: 25px ;
+        margin-right: 20px;
+        font-weight: bolder;
+        &--option{
+            padding: 1.5rem;
+            margin: 1rem 0 1rem 0.75rem ;
+            border-radius: 1.25rem;
+            @include ombre();
+            background-color: #f2f2f2;
+            display: flex;
+            column-gap: 30px;
+                &:hover {/*Devient violet au survol*/
+                background-color:#f0e8fc;    
+                @include ombre();
+                cursor: pointer;
+                    .fas {
+                        color: $violet; /*La couleur passe au violet off au passage de la souris */
+                    }
+                }
+                .fas { /*positionnement des icones du menu Fonctionnement*/
+                    color: grey; 
+                        margin-left: -5px; 
+            }   
+        } 
+    }
+}
+/*créer et placer les petits boutons 1.2.3.*/
+.numero{
+    background-color: $violet;
+    @include centrage1() 
+    @include btn()
+    }
+//SECTION RESTAURANT AVEC LES CADRES DES 4 RESTAURANTS
+#restaurant{
+    margin-top: 80px;
+    background-color:$gris;
+    padding: 20px 0 80px 30px;     
+    }
+//Positionnement du titre "restaurant"    
+.restaurant__title{
+    h1{@include h1();
+    padding-bottom: 30px;}
+    }
+//Placement du 1er restaurant -La palette du gout //
+.carte img {@include cartefoto()}
+    h6{@include nouveau()}
+.caché{@include new()}    
+.carte{
+    @include carte();
+    margin-bottom: 35px;
+        &__legende{
+        position: relative;
+        bottom: 38%;
+        display: grid; /*placement des coeurs*/
+        grid-template-columns: 3fr 1fr;
+        &--nom{ /*Nom des restaurants*/
+            margin: 10px 0 0 15px;
+            color: black;            
+            }
+            &--lieu{ /*Quartier des restaurants*/
+                margin-top: 5px;
+                font-size: 14px; 
+                }
+                &--icone{ @include centrage1();/*centrage du coeur dans sa div*/
+                        .heart{@include coeurV();               
+                            &:hover{@include coeurVhover();               
+                                .heart-color { /*Au passage de la souris le coeur vide se remplit*/
+                                transform: scale(1);
+                                opacity: 1;                        
+                                }                
+                            }
+                        }            
+                                .heart-color {@include coeurG()} 
+                    }
+                }
+            }
+
+/***************FIN DE LA PAGE D'ACCUEIL***************/
+
+
+/***************STYLISATION DE LA PAGE DES MENUS***************/
+.arrowR{
+    font-size: 1.1em;
+    position: absolute;
+    left: 10px;
+    top: 10px
+    }       
+.header__pic img {
+    @include illustration();/*Intégration de l'image du restaurant */ 
+    width: 100%;    
+    }
+#selection {
+    background: white;
+    width: 100%;
+    @include centrage1();
+    }
+.selection {
+    margin-top: -30px; //j'empiete dans l'espace de la photo
+    padding: 0 20px;  //je descends le titre de 15px et je fais en sorte que la taille du menu arrive jusqu'au bouton
+    width: 100%; //je determine la taille que prendra la partie menu dans ma page 
+    max-width: 1230px;    
+    background-color:$gris; //couleur de fond du menu 
+    border-radius: 35px 35px 0 0 ; //rognement des cotes hauts 
+    position: relative; //je positionne le menus gris dessus la photo de restaurant
+    z-index: 1;
+
+        &__headline { //mise en place du titre et du coeur 
+            display: flex;
+            justify-content: space-around;
+            }
+
+        &__title {font-family: 'Shrikhand';}//affectation d'une police au nom du resto
+
+        &__layout {//disposition de la page menu en 3 parties avec 40px d'espace entre les 3 parties 
+            display: grid;
+            grid-gap: 40px;
+
+        &__bloc { //dispo et espace entre les rectangles des entrees plats desserts 
+            display: grid;
+            grid-gap: 15px;
+            }
+         h3 {// stylisation du titre (nom du restaurant)
+                padding-left: -20px;    
+            position: relative;
+                font-weight: 400;
+                text-transform: uppercase;
+                @include soulignement()
+            }       
+        &__contain {//mise en place des rectancles avec les noms des plats
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            @include centrage1();
+            width: 100%;
+            height: 70px;
+            border-radius: 15px;
+            background-color: white ;
+            @include ombre();
+            
+            &:hover .check__box {
+                @include centrage1();
+                animation: glissade 0.7s ease ;
+                transform-origin: right; //va faire demarrer le debut de l'animation à droite
+            }
+            &:hover .selection__case__price {
+                padding-right: 100px;
+                transition: 0.7s ease ; //rognement du prix au passage de la souris 
+            }
+            .check__box {
+                display: none; //invisibilise le check
+                position: absolute;
+                background: $vert;
+                border-radius: 0 15px 15px 0;
+                right: 0px; //depart depuis le bord extreme droite 
+                padding: 0 13px; //taille du check box 
+                height: 100%;
+                i { //cercle englobant le cercle 
+                    font-size: 25px;
+                    color: white;
+                    transform: rotate(180deg);
+                    animation: rotation 0.5s both;
+                }
+            }
+        }
+        .dish-and-price{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            }        
+        }
+    &__case{
+        &__dish{
+            margin-left: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            
+            & p{
+                margin: 0;
+                text-overflow: ellipsis;
+                overflow: hidden;                
+            }
+            
+            &-name{font-weight: bold;}
+        }
+        &__price{
+            padding-right: 20px;
+            font-weight: bold;
+            padding-left: 7px;
+            
+        }
+    }
+    
+}
+@keyframes rotation{
+    0% {transform: rotate(0);}
+    100% {transform: rotate(360deg);}
+    }
+@keyframes glissade{
+    0% {transform: scaleX(0);}
+    100% {transform: scaleX(-50px);}
+  }
+@keyframes opacity{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+  .lag {animation: opacity 1s both;}
+#dish-1 {animation-delay: 0.1s;}
+#dish-2 {animation-delay: 0.2s;}
+#dish-3 {animation-delay: 0.3s;}
+#dish-4 {animation-delay: 0.4s;}
+#dish-5 {animation-delay: 0.5s;}
+#dish-6 {animation-delay: 0.6s;}
+#dish-7 {animation-delay: 0.7s;}
+#dish-8 {animation-delay: 0.8s;}
+#dish-9 {animation-delay: 0.9s;}
+//************************************/
+
+/***************FOOTER***************/
+footer{
+    padding-bottom: 20px;
+    background-color: black;
+    color: whitesmoke;
+    width: 100%;
+
+  svg{ margin-left: 10px;
+      path{
+           fill: whitesmoke}
+          }
+    }
+.logoF{padding: 25px 0 0 25px}
+
+footer a {color: whitesmoke;}
+/***************FIN DU FOOTER***************/
+
+
+
+/***************DECLARATION DU LOADER ET SON ANIMATION**************/
+.loader{
+    position: fixed; /*je fais en sorte que l'image du loader suive l'intégralité de la page d'accueil*/
+    z-index: 1; /*je cache les éléments suceptibles d'apparaitre au lancement de mon loader */
+    background-color: black;
+    top: 0; left: 0; right: 0; bottom: 0;    
+    @include centrage1();
+    animation: chargement 2.8s linear;
+    visibility: hidden; 
+@keyframes chargement {
+    0% {
+        visibility: visible;
+        opacity: 0.9;//reglage du temps d'apparition de l'image d'accueil
+    }
+    50% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 0.1;
+        visibility: hidden;
+        }
+    }    
+} 
+.lettre{
+    color: $gradient;
+    font-size: 50px;
+    letter-spacing: 10px;
+    //margin-bottom: 150px; A ENLEVER 
+    animation: flash 2.8s linear;
+    }
+
+@keyframes flash{
+    0% {
+        color: $violet;
+        text-shadow: 0 0 7px $rose;    
+        }
+
+    40% {
+        color: $vert;
+        text-shadow: none;
+        }
+
+    80% {
+        color: $violet;
+        text-shadow: 0 0 7px $rose;
+        }
+
+    100% {
+        color: $rose; 
+        text-shadow: none
+        }
+}
+.lettre:nth-child(1){animation-delay: 0.1s;}
+.lettre:nth-child(2){animation-delay: 0.3s;}
+.lettre:nth-child(3){animation-delay: 0.3s;}
+.lettre:nth-child(4){animation-delay: 0.5s;}
+.lettre:nth-child(5){animation-delay: 0.7s;}
+.lettre:nth-child(6){animation-delay: 0.7s;}
+.lettre:nth-child(7){animation-delay: 0.9s;}
+.lettre:nth-child(8){animation-delay: 1.1s;}
+.lettre:nth-child(9){animation-delay: 1.3s;}
+.lettre:nth-child(10){animation-delay: 1.3s;}
+.lettre:nth-child(11){animation-delay: 1.5s;}
+.lettre:nth-child(12){animation: rotate-center 0.9s ease-in-out infinite;	
+}
+
+@keyframes rotate-center {
+    0% {transform: rotate(0);}
+    100% {transform: rotate(360deg);}
+}
+/***************VERSION DESKTOP***************/
+@media screen and (min-width: 1100px) {
+.headline{ 
+    background-color: $gris;
+    &__mid {width: 450px;} /* j'ai enlevé le centrage en agrandissant la div*/
+
+        .headline__mid--button {
+           @include boutonD()
+            }
+        }
+.fonctionnement{    
+    &__menu{ /*disposition du menu fonctionnement sur 1 rangée*/
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr;
+        }
+    }
+.numero{ /*changement de design et d'emplacement des boutons dans la version desktop*/
+    background-color: $vert;
+    color: green;
+    font-size: bolder;
+    position: relative;
+    left: 45vh;
+    }   
+.suggestion{    
+    display: grid; 
+    gap: 20px;/*Espace entre les 4 cartes*/ 
+    width: 100%;
+    display: flex; /*Alignement sur une rangée des ' cartes restaurants*/
+    justify-content: space-between      
+    }
+//responsive des pages restaurant 
+.selection {margin-top: -60px;}
+    .selection__layout {
+        display: grid; /*3 colonnes sur 1 rangée*/
+        grid-template-columns: repeat(3,1fr); /*Voici les 3 colonnes prenant une place équitable */
+        grid-template-rows: 1fr;/*La rangée*/
+        h3 {@include soulignementD()}// stylisation du titre (nom du restaurant)
+    }
+//responsive des pieds de pages 
+    footer{/*Mise en forme libre des pages desktop*/       
+        color: $vert;
+         svg{ color: $vert;
+         path{fill: $vert}
+        }
+    }
+    footer a {color: $vert;}
+    .footerR{       
+        color: $rose;
+         svg{ color: $rose;
+         path{fill: $rose}
+        }
+    }
+    .footerR a {color: $rose;}
+}
+
